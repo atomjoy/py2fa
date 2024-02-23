@@ -52,6 +52,7 @@ x = pyotp.TOTP(secret)
 code = x.now()
 
 # Show
+print(secret)
 print(code)
 
 # Code verified for current time
