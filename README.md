@@ -50,8 +50,14 @@ secret = pyotp.random_base32()
 x = pyotp.TOTP(secret)
 code = x.now()
 
-print(secret)
+# Show
 print(code)
+
+# Code verified for current time
+print(x.verify(code)) # True
+
+# time.sleep(35)
+# print(x.verify(code))
 ```
 
 ## Links
