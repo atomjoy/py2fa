@@ -1,5 +1,5 @@
 # Google Authenticator in Python
-Desktop Python Google Authenticator script with json secrets.
+Google Authenticator desktop GUI and script application in Python with JSON secrets.
 
 ## How to
 Install python3 and module
@@ -9,7 +9,7 @@ Install python3 and module
 which python3
 
 # Install
-sudo apt install python3 python3-pyotp -y
+sudo apt install python3 python3-pyotp python3-tk -y
 ```
 
 ### Add secrets
@@ -26,9 +26,13 @@ First add your 2FA secrets to the **secrets.json** file (when enabling github tw
 The script generates 2fa codes for secrets.
 
 ```sh
+# Gui desktop app tkinter
+python3 main.py
+
+# Console script
 python3 auth.py
 
-# With 30 seconds loop
+# Console script (30 seconds loop)
 python3 2fa.py
 ```
 
