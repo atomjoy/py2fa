@@ -39,3 +39,9 @@ code = x.now()
 print(secret)
 print(code)
 ```
+
+## Links
+- https://pyauth.github.io/pyotp/
+- https://medium.com/@olutomilayodolapo/how-to-retrieve-otp-from-authy-google-authenticator-with-python-53544575bcef
+- https://github.com/grahammitchell/google-authenticator/blob/master/google-authenticator.py
+- https://www.geeksforgeeks.org/two-factor-authentication-using-google-authenticator-in-python/
