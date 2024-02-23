@@ -5,6 +5,10 @@ Desktop Python Google Authenticator script with json secrets.
 Install python3 and module
 
 ```sh
+# Check
+which python3
+
+# Install
 sudo apt install python3
 sudo apt install python3-pyotp -y
 ```
