@@ -9,8 +9,7 @@ Install python3 and module
 which python3
 
 # Install
-sudo apt install python3
-sudo apt install python3-pyotp -y
+sudo apt install python3 python3-pyotp -y
 ```
 
 ### Add secrets
