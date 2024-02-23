@@ -13,8 +13,18 @@ sudo apt install python3
 sudo apt install python3-pyotp -y
 ```
 
+### Add secrets
+First add your 2FA secrets to the **secrets.json** file (when enabling github two factor auth get secret key).
+
+```json
+{
+  "atomjoy_github": "JBSWY3DPEHPK3PXP",
+  "moovspace_github": "JBSWY3DPEHPK3PXD"  
+}
+```
+
 ### Run script
-First add your 2FA secrets to the secrets.json file (when enabling github two factor auth get secret hash). The script generates 2fa codes for secrets.
+The script generates 2fa codes for secrets.
 
 ```sh
 python3 auth.py
