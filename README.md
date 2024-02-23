@@ -27,6 +27,9 @@ The script generates 2fa codes for secrets.
 
 ```sh
 python3 auth.py
+
+# With 30 seconds loop
+python3 2fa.py
 ```
 
 ### Output
