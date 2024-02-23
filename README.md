@@ -39,6 +39,8 @@ Label moovspace_github Secret JBSWY3DPEHPK3PXD Code 304997
 ## Random secret base32
 
 ```py
+#!/usr/bin/python3
+
 import pyotp
 import time
 
