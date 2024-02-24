@@ -54,10 +54,10 @@ class JsonFile:
 
     def otpCode(self, secret):
         try:
-            return str(pyotp.TOTP(secret).now())
+            return pyotp.TOTP(secret).now()
         except Exception:
             print("Otp code error")
-        return str("000000")
+        return "000000"
 
     def saveJson(self):
         json_obj = {}

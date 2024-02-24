@@ -1,4 +1,4 @@
-# Google Authenticator in Python
+# Py2FA Google Authenticator in Python
 
 Google Authenticator desktop GUI and script application in Python with JSON secrets.
 
@@ -90,4 +90,6 @@ cp py2fa.desktop /home/username/.local/share/applications
 - <https://pyauth.github.io/pyotp/>
 - <https://medium.com/@olutomilayodolapo/how-to-retrieve-otp-from-authy-google-authenticator-with-python-53544575bcef>
 - <https://github.com/grahammitchell/google-authenticator/blob/master/google-authenticator.py>
-- <https://www.geeksforgeeks.org/two-factor-authentication-using-google-authenticator-in-python/>
+- <https://www.geeksforgeeks.org/two-factor-authentication-using-google-authenticator-in-python>
+- <https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/index.html>
+- <https://www.pythontutorial.net/tkinter/tkinter-treeview>

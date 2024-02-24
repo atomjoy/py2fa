@@ -1,16 +1,28 @@
 #!/usr/bin/python3
 
-import pyotp, time, json, os, shutil, base64
+import time, pyotp, json, os, shutil, base64
 import tkinter
 from tkinter import ttk
+from tkinter.font import nametofont
 from tkinter import messagebox
 from json_file import JsonFile
 
 window = tkinter.Tk()
 window.title("Py2FA Google Authenticator")
-# window.geometry('300x200')
-# window.resizable(False, False)
+window.geometry("800x700")
+window.resizable(False, False)
 
+# Style
+style = ttk.Style(window)
+# Style theme
+window.tk.call("source", "forest-light.tcl")
+window.tk.call("source", "forest-dark.tcl")
+# Set theme
+style.theme_use("forest-dark")
+# Dialog box font
+window.option_add("*Dialog.msg.font", "roboto 16")
+
+# Main frame
 fr = tkinter.Frame(window)
 fr.pack()
 
@@ -41,7 +53,10 @@ def update():
     treeview.delete(*treeview.get_children())
     i = 0
     for item_tuple in load_data():
-        treeview.insert("", tkinter.END, id=i, values=item_tuple)
+        if i % 2 == 0:
+            treeview.insert("", tkinter.END, id=i, values=item_tuple, tags=("odd",))
+        else:
+            treeview.insert("", tkinter.END, id=i, values=item_tuple, tags=("even",))
         i = i + 1
     window.after(15000, update)
     print("Update", t)
@@ -51,8 +66,9 @@ def update():
 fr_codes = tkinter.LabelFrame(fr, text="2FA Codes", font="roboto 16")
 fr_codes.grid(row=0, column=0)
 
-treeFrame = ttk.Frame(fr_codes)
-treeFrame.grid(row=0, column=0, pady=10)
+treeFrame = ttk.Frame(fr_codes, padding=(10, 10))
+treeFrame.grid(row=0)
+
 treeScroll = ttk.Scrollbar(treeFrame)
 treeScroll.pack(side="right", fill="y")
 
@@ -61,28 +77,52 @@ treeview = ttk.Treeview(
     treeFrame,
     show="headings",
     columns=cols,
-    height=20,
+    height=13,
     selectmode="browse",
     yscrollcommand=treeScroll.set,
+    padding=(-4, -4),
+    # displaycolumns=("Name", "Code"),
 )
-treeview.column("Name", width=250)
+
+# Headings
+treeview.heading(cols[0], text=cols[0], anchor=tkinter.W)
+treeview.heading(cols[1], text=cols[1], anchor=tkinter.W)
+treeview.heading(cols[2], text=cols[2], anchor=tkinter.E)
+
+# Heading style
+treeview.column("Name", width=200, stretch=True, anchor=tkinter.W)
+treeview.column("Secret", width=200, stretch=True, anchor=tkinter.W)
+treeview.column("Code", width=250, stretch=True, anchor=tkinter.E)
+
+# Select event
 treeview.bind("<<TreeviewSelect>>", selectItem)
 # treeview.bind('<ButtonRelease-1>', selectItem)
 
-for col_name in cols:
-    treeview.heading(
-        col_name,
-        text=col_name,
-    )
+# Style rows
+treeview.tag_configure("odd", background="#3a4a5e", foreground="#ffffff")
+treeview.tag_configure("even", background="#283240", foreground="#ffffff")
 
 i = 0
 
 for item_tuple in load_data():
-    treeview.insert("", tkinter.END, id=i, values=item_tuple)
+    if i % 2 == 0:
+        treeview.insert("", tkinter.END, id=i, values=item_tuple, tags=("odd",))
+    else:
+        treeview.insert("", tkinter.END, id=i, values=item_tuple, tags=("even",))
     i = i + 1
 
-treeview.pack()
+# Add
+treeview.pack(fill="x")
+# Scrollbar
 treeScroll.config(command=treeview.yview)
+
+# Style treeview
+style.configure("Treeview.Heading", font=("Roboto", 13))
+style.configure(
+    "Treeview", font=("Roboto", 14), rowheight=30, highlightthickness=0, bd=0
+)
+# style.layout("Treeview", [("mystyle.Treeview.treearea", {"sticky": "nswe"})])
+# nametofont("TkHeadingFont").configure(family="roboto", size=16, weight="bold")
 
 
 # Saving user secret callbacks
@@ -108,26 +148,36 @@ def callback_del():
 
 
 # Saving user secret
-fr_add_secret = tkinter.LabelFrame(fr, text="Add secret", font="roboto 16")
+fr_add_secret = tkinter.LabelFrame(
+    fr, text="Add 2FA Secret", font="roboto 16", padx=5, pady=10
+)
 fr_add_secret.grid(row=1, column=0)
 # fr_add_secret.pack(fill="x")
 
-label_name = tkinter.Label(fr_add_secret, text="App name")
+label_name = tkinter.Label(
+    fr_add_secret, text="App name", font="roboto 14", justify="left"
+)
 label_name.grid(row=0, column=0)
 
-label_secret = tkinter.Label(fr_add_secret, text="App secret")
+label_secret = tkinter.Label(
+    fr_add_secret, text="App secret", font="roboto 14", justify="left"
+)
 label_secret.grid(row=0, column=1)
 
-input_name = tkinter.Entry(fr_add_secret)
-input_name.grid(row=1, column=0)
+input_name = tkinter.Entry(fr_add_secret, font="roboto 15", width=26)
+input_name.grid(row=1, column=0, padx=5, pady=5)
 
-input_secret = tkinter.Entry(fr_add_secret)
-input_secret.grid(row=1, column=1)
+input_secret = tkinter.Entry(fr_add_secret, font="roboto 15", width=26)
+input_secret.grid(row=1, column=1, padx=5, pady=5)
 
-button_add = tkinter.Button(fr_add_secret, text="Append", command=callback_add)
+button_add = tkinter.Button(
+    fr_add_secret, text="Save", command=callback_add, font="roboto 15"
+)
 button_add.grid(row=2, column=1)
 
-button_del = tkinter.Button(fr_add_secret, text="Delete", command=callback_del)
+button_del = tkinter.Button(
+    fr_add_secret, text="Delete", command=callback_del, font="roboto 15"
+)
 button_del.grid(row=2, column=0)
 
 update()
