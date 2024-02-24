@@ -1,0 +1,21 @@
+# App activator
+# /home/user/.local/share/applications
+
+[Desktop Entry]
+Exec=/bin/python3 /home/user/Dokumenty/github/py2fa-gui/main.py %u
+Name=Py2FA
+Name[pl]=Py2FA
+Comment=Py2fa Authenticator
+Comment[pl]=Py2fa Authenticator
+GenericName=Py2fa Authenticator
+GenericName[pl]=Py2fa Authenticator
+X-GNOME-FullName=Py2fa Google Authenticator
+X-GNOME-FullName[pl]=Py2fa Google Authenticator
+Terminal=false
+X-MultipleArgs=false
+Type=Application
+Icon=qrcode
+Categories=Network;Authenticator;
+MimeType=text/html;text/xml;application/xhtml+xml;application/xml;application/vnd.mozilla.xul+xml;application/rss+xml;application/rdf+xml;image/gif;image/jpeg;image/png;x-scheme-handler/htt>
+StartupWMClass=Py2FA-bin
+StartupNotify=true

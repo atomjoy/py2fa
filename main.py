@@ -7,7 +7,7 @@ from tkinter import messagebox
 from json_file import JsonFile
 
 window = tkinter.Tk()
-window.title("2FA Google Authenticator")
+window.title("Py2FA Google Authenticator")
 # window.geometry('300x200')
 # window.resizable(False, False)
 
@@ -25,18 +25,19 @@ def selectItem(event):
     tree = event.widget
     current_item = tree.focus()
     item = tree.item(current_item)
-    print("Selected Item", item)
+    # print("Selected Item", item)
     try:
         if hasattr(item, "values"):
-            code = format(item["values"][2], "006d")
+            code = format(item["values"][2], "06d")
             messagebox.showinfo("Code", code)
-            print("Id:", current_item, "Item:", item, "Code:", code)
-    except IndexError:
-        print("Empty item values", item)
+            # print("Id:", current_item, "Item:", item, "Code:", code)
+    except (IndexError, Exception):
+        # print("Item not selected")
+        pass
 
 
 def update():
-    t = time.strftime("%I:%M:%S", time.localtime())
+    t = time.strftime("%H:%M:%S", time.localtime())
     treeview.delete(*treeview.get_children())
     i = 0
     for item_tuple in load_data():
@@ -47,7 +48,7 @@ def update():
 
 
 # Show user codes
-fr_codes = tkinter.LabelFrame(fr, text="2FA Codes", font="times 21")
+fr_codes = tkinter.LabelFrame(fr, text="2FA Codes", font="roboto 16")
 fr_codes.grid(row=0, column=0)
 
 treeFrame = ttk.Frame(fr_codes)
@@ -59,17 +60,20 @@ cols = ("Name", "Secret", "Code")
 treeview = ttk.Treeview(
     treeFrame,
     show="headings",
-    yscrollcommand=treeScroll.set,
     columns=cols,
-    height=13,
+    height=20,
     selectmode="browse",
+    yscrollcommand=treeScroll.set,
 )
 treeview.column("Name", width=250)
 treeview.bind("<<TreeviewSelect>>", selectItem)
 # treeview.bind('<ButtonRelease-1>', selectItem)
 
 for col_name in cols:
-    treeview.heading(col_name, text=col_name)
+    treeview.heading(
+        col_name,
+        text=col_name,
+    )
 
 i = 0
 
@@ -90,7 +94,7 @@ def callback_add():
     js = JsonFile("secrets.json")
     if len(name) >= 3:
         if len(secret) >= 16:
-            print("Name", name, "Secret", secret)
+            # print("Name", name, "Secret", secret)
             js.addItem(name, secret)
             update()
 
@@ -104,8 +108,9 @@ def callback_del():
 
 
 # Saving user secret
-fr_add_secret = tkinter.LabelFrame(fr, text="Add secret", font="times 21")
+fr_add_secret = tkinter.LabelFrame(fr, text="Add secret", font="roboto 16")
 fr_add_secret.grid(row=1, column=0)
+# fr_add_secret.pack(fill="x")
 
 label_name = tkinter.Label(fr_add_secret, text="App name")
 label_name.grid(row=0, column=0)

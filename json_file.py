@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-import pyotp, time, json, os, shutil, base64
+import pyotp, time, json, os, shutil, base64, sys
 
 
 class JsonFile:
@@ -14,6 +14,10 @@ class JsonFile:
         self.filename = filename
         self.__loadJson()
         self.__updateCode()
+        self.scriptPath()
+
+    def scriptPath(self):
+        print(os.path.dirname(os.path.realpath(sys.argv[0])))
 
     def getAll(self):
         return self.data_code
@@ -39,7 +43,7 @@ class JsonFile:
                     self.data.append(item)
                     self.__updateCode()
                     self.saveJson()
-                    print("Appended", self.data)
+                    # print("Appended", self.data)
 
     def updateCode(self):
         self.data_code = []
@@ -64,7 +68,7 @@ class JsonFile:
             rel = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
             with open(os.path.join(rel, self.filename), "w") as outfile:
                 json.dump(json_obj, outfile)
-                print("Saved json", json_obj)
+                # print("Saved json", json_obj)
         except (ImportError, Exception):
             print("Save error")
 
@@ -85,7 +89,16 @@ class JsonFile:
             res = [i for i in self.data if i[0] != name]
             self.data = res
             self.saveJson()
-            print(res)
+            # print(res)
+
+    def showPaths(self):
+        print(sys.path[0])
+        print(os.path.realpath(__file__))
+        print(os.path.dirname(__file__))
+        print(os.getcwd())
+        print(os.path.join(os.getcwd(), os.path.dirname(__file__)))
+        print(os.path.dirname(os.path.realpath(__file__)))
+        print(os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__))))
 
     __loadJson = loadJson  # private copy of original update() method
     __updateCode = updateCode  # private copy of original update() method

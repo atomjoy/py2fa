@@ -1,8 +1,10 @@
 # Google Authenticator in Python
+
 Google Authenticator desktop GUI and script application in Python with JSON secrets.
 
 ## How to
-Install python3 and module
+
+Install python3 and modules
 
 ```sh
 # Check
@@ -13,16 +15,18 @@ sudo apt install python3 python3-pyotp python3-tk -y
 ```
 
 ### Add secrets
+
 First add your 2FA secrets to the **secrets.json** file (when enabling github two factor auth get secret key).
 
 ```json
 {
   "atomjoy_github": "JBSWY3DPEHPK3PXP",
-  "moovspace_github": "JBSWY3DPEHPK3PXD"  
+  "moovspace_github": "JBSWY3DPEHPK3PXD"
 }
 ```
 
 ### Run script
+
 The script generates 2fa codes for secrets.
 
 ```sh
@@ -69,8 +73,21 @@ print(x.verify(code)) # True
 # print(x.verify(code))
 ```
 
+## Edit and copy PyF2A activator
+
+For Linux Debian 12 Gnome 43+
+
+```sh
+# Edit this line change main.py file location
+Exec=/bin/python3 /home/username/Dokumenty/github/py2fa-gui/main.py %u
+
+# And copy app activator file to
+cp py2fa.desktop /home/username/.local/share/applications
+```
+
 ## Links
-- https://pyauth.github.io/pyotp/
-- https://medium.com/@olutomilayodolapo/how-to-retrieve-otp-from-authy-google-authenticator-with-python-53544575bcef
-- https://github.com/grahammitchell/google-authenticator/blob/master/google-authenticator.py
-- https://www.geeksforgeeks.org/two-factor-authentication-using-google-authenticator-in-python/
+
+- <https://pyauth.github.io/pyotp/>
+- <https://medium.com/@olutomilayodolapo/how-to-retrieve-otp-from-authy-google-authenticator-with-python-53544575bcef>
+- <https://github.com/grahammitchell/google-authenticator/blob/master/google-authenticator.py>
+- <https://www.geeksforgeeks.org/two-factor-authentication-using-google-authenticator-in-python/>
