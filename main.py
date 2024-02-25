@@ -1,11 +1,13 @@
 #!/usr/bin/python3
 
-import time, pyotp, json, os, shutil, base64
+import time, os, sys, pyotp, json, shutil, base64
 import tkinter
 from tkinter import ttk
 from tkinter.font import nametofont
 from tkinter import messagebox
 from json_file import JsonFile
+
+app_path = os.path.dirname(sys.argv[0])
 
 window = tkinter.Tk()
 window.title("Py2FA Google Authenticator")
@@ -15,8 +17,8 @@ window.resizable(False, False)
 # Style
 style = ttk.Style(window)
 # Style theme
-window.tk.call("source", "forest-light.tcl")
-window.tk.call("source", "forest-dark.tcl")
+window.tk.call("source", app_path + "/forest-light.tcl")
+window.tk.call("source", app_path + "/forest-dark.tcl")
 # Set theme
 style.theme_use("forest-dark")
 # Dialog box font
@@ -98,9 +100,18 @@ treeview.column("Code", width=250, stretch=True, anchor=tkinter.E)
 treeview.bind("<<TreeviewSelect>>", selectItem)
 # treeview.bind('<ButtonRelease-1>', selectItem)
 
-# Style rows
+# Style rows silver
 treeview.tag_configure("odd", background="#3a4a5e", foreground="#ffffff")
 treeview.tag_configure("even", background="#283240", foreground="#ffffff")
+# # Blue
+# treeview.tag_configure("odd", background="#0550ae", foreground="#ffffff")
+# treeview.tag_configure("even", background="#0a3069", foreground="#ffffff")
+# # Violet
+# treeview.tag_configure("odd", background="#8250df", foreground="#ffffff")
+# treeview.tag_configure("even", background="#a475f9", foreground="#ffffff")
+# # Red
+# treeview.tag_configure("odd", background="#82071e", foreground="#ffffff")
+# treeview.tag_configure("even", background="#a40e26", foreground="#ffffff")
 
 i = 0
 
@@ -155,19 +166,19 @@ fr_add_secret.grid(row=1, column=0)
 # fr_add_secret.pack(fill="x")
 
 label_name = tkinter.Label(
-    fr_add_secret, text="App name", font="roboto 14", justify="left"
+    fr_add_secret, text="App name", font="roboto 14", anchor=tkinter.W
 )
 label_name.grid(row=0, column=0)
 
 label_secret = tkinter.Label(
-    fr_add_secret, text="App secret", font="roboto 14", justify="left"
+    fr_add_secret, text="App secret", font="roboto 14", anchor=tkinter.W
 )
 label_secret.grid(row=0, column=1)
 
-input_name = tkinter.Entry(fr_add_secret, font="roboto 15", width=26)
+input_name = tkinter.Entry(fr_add_secret, font="roboto 15", width=26, border=1)
 input_name.grid(row=1, column=0, padx=5, pady=5)
 
-input_secret = tkinter.Entry(fr_add_secret, font="roboto 15", width=26)
+input_secret = tkinter.Entry(fr_add_secret, font="roboto 15", width=26, border=1)
 input_secret.grid(row=1, column=1, padx=5, pady=5)
 
 button_add = tkinter.Button(
